@@ -1,0 +1,73 @@
+CREATE TABLE Filmes (
+    FilmeID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(255) NOT NULL,
+    Ano INT NOT NULL,
+    Duracao INT NOT NULL
+);
+
+CREATE TABLE Atores (
+    AtorID INT AUTO_INCREMENT PRIMARY KEY,
+    PrimeiroNome VARCHAR(255) NOT NULL,
+    UltimoNome VARCHAR(255) NOT NULL,
+    Genero ENUM('Masculino', 'Feminino') NOT NULL
+);
+
+CREATE TABLE Generos (
+    GeneroID INT AUTO_INCREMENT PRIMARY KEY,
+    Nome VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE ElencoFilme (
+    FilmeID INT NOT NULL,
+    AtorID INT NOT NULL,
+    Papel VARCHAR(255) NOT NULL,
+    PRIMARY KEY (FilmeID, AtorID),
+    FOREIGN KEY (FilmeID) REFERENCES Filmes(FilmeID),
+    FOREIGN KEY (AtorID) REFERENCES Atores(AtorID)
+);
+
+
+CREATE TABLE FilmesGenero (
+    FilmeID INT NOT NULL,
+    GeneroID INT NOT NULL,
+    PRIMARY KEY (FilmeID, GeneroID),
+    FOREIGN KEY (FilmeID) REFERENCES Filmes(FilmeID),
+    FOREIGN KEY (GeneroID) REFERENCES Generos(GeneroID)
+);
+
+
+INSERT INTO Filmes (Nome, Ano, Duracao) VALUES 
+('De Volta Para o Futuro', 1985, 116),
+('Titanic', 1997, 195),
+('Matrix', 1999, 136),
+('Clube da Luta', 1999, 139),
+('Avatar', 2009, 162);
+
+-- Inserção de dados na tabela Atores
+INSERT INTO Atores (PrimeiroNome, UltimoNome, Genero) VALUES 
+('Michael', 'Fox', 'Masculino'),
+('Leonardo', 'DiCaprio', 'Masculino'),
+('Kate', 'Winslet', 'Feminino'),
+('Keanu', 'Reeves', 'Masculino'),
+('Brad', 'Pitt', 'Masculino');
+
+INSERT INTO Generos (Nome) VALUES 
+('Ficção Científica'),
+('Romance'),
+('Ação'),
+('Drama'),
+('Mistério');
+
+INSERT INTO ElencoFilme (FilmeID, AtorID, Papel) VALUES 
+(1, 1, 'Marty McFly'),
+(2, 2, 'Jack Dawson'),
+(2, 3, 'Rose DeWitt Bukater'),
+(3, 4, 'Neo'),
+(4, 5, 'Tyler Durden');
+
+INSERT INTO FilmesGenero (FilmeID, GeneroID) VALUES 
+(1, 1),
+(2, 2),
+(3, 3),
+(4, 4),
+(5, 1);
